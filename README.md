@@ -1,43 +1,162 @@
----
-tags:
-level:
-languages:
-resources:
----
+# Ruby Object Remembrance 
 
-# Ruby Remembering Objects
+## Objectives
 
-## Outline
+1. Understand the concept of remembrance in object-oriented programming. 
+2. Learn how to use class variables to, remember, or store, instances of a class that are produced. 
 
-Remembering objects
+## Introduction
 
-We know a lot about OO
-1. Classes
-2. Instances
-3. Initialize
-4. Self / class vs instance scope
-5. Class variables
-6. Class methods
+Let's say we're building a command line game in which players play various rounds until a final tally determines the winner. Or creating an app in which we want to store a list of all of the users who sign up. Or building a program that helps users track and store the passwords for their various accounts. 
 
-With that we can do something really cool.
+In all of these situations, and many more we can imagine, our application needs a way to store or remember a collection of class instances. Whether they are instances of a `Game`, `User` or `Password` class, all of these examples would require our program to keep track of instances that are created. 
 
-Imagine wanting to build a music manager that kept track of all the songs you entered and let you browse them. Later we'll add more functionality to the application, but for now we'll keep it simple.
+Luckily for us, Ruby allows us to do so by uses class variables to store new instances as soon as they are created. Let's take a look together. 
 
-We've provided the base functionality of entering a song and creating instances, but what's missing is the core functionality of then being able to list out songs.
+## Using class variables to store instances of a class
 
-Somehow, as we enter song names into the cli and instantiate instances of songs, we need to keep track of all of them
-So we can list them later? But how?
+Imagine we are building an app that managers a user's music. Our app should keep track of all of the songs and user enters and allow our user to browse their existing songs. 
 
-So first, where do we store songs? Whose responsibility is it to remember all the songs that were created? A specific songs or songs in general? Song class. But where? A class variable. Let's also build a reader.
+Let's take a look at the following class:
 
-Let's actually finish everything by stubbing out the last piece with some canned data a common technique
+```ruby
+class Song
+	
+	attr_accessor :name
 
-Now the last part, how the hell do we save a song? How do we add songs as they are created into that class variable?
+	def initialize(name)
+		@name = name
+	end
+end
+```
 
-So first, at what moment in our code do we have access to a newly born song? What represents the moment a song is created?
-Initialize so that's where we are adding the newly born song into the class variable. Let's program what we know
+With this code, we can create a new song like this:
 
-Now the Last part, within initialize how do we grab the very song that was just born to add it to the class variable? What's the scope
-Of intialize. Within instance scope, how do we refer to the object itself? What will self be?
+```ruby
+99_problems = Song.new("99 Problems")
+```
 
-Done.
+Let's go ahead and create another song:
+
+```ruby
+thriller = Song.new("Thriller") 
+```
+
+Uh-oh. Our user wants to browse their songs now and select one to play. Currently, our code in the `Song` class has no way to keep track of the songs we just created and display them back to the user. 
+
+### Creating the Class Variable
+
+Let's take a step back and think about the concept of responsibility. Whose job is it to know about *every instance of the `Song` class*? We have two choices right now: an instance of the song class or the `Song` class itself.
+
+It is not the responsibility of an individual song to know about all of the other songs. Keeping track of all of the songs that it creates, however, fits right into the purview of the Song class. 
+
+So, how can we tell the `Song` class to keep track of every instance that it creates? We use a class variable. 
+
+Let's create a class variable, `@@all`, that will store every instance of the `Song` class. Recall that `@@` before a variable name is how we define a class variable.
+
+```ruby
+class Song
+	
+	@@all = []
+	
+	attr_accessor :name
+
+	def initialize(name)
+		@name = name
+	end
+end
+```
+
+Notice that we set our class variable equal to an empty array. Arrays are perfect for storing lists of data, so we'll use an array to store our lists of `Song` instances. 
+
+Now that our class is *set up* to store the instances that it produces, we have to ask: *how* does it store these instances?
+
+### Adding Instances to the `@@all` Array
+
+Before we can answer this question, we should ask another. *When* should the `Song` class become aware of, or store, an instance of itself? 
+
+This should happen at the time on instantiation––when a new song gets created, it should be immediately stored by our `Song` class' `@@all`class variable. 
+
+We can implement this by simply adding the new instance that gets created into the array stored in `@@all` *inside our `#initialize` method.*
+
+Let's take a look:
+
+```ruby
+class Song
+	
+	@@all = []
+	
+	attr_accessor :name
+
+	def initialize(name)
+		@name = name
+		@@all << self
+	end
+end
+```
+
+In `#initialize` we use the `self` keyword to refer to the new object that has just been created by `#new`. Remember that when `#new` is called, it creates a new instance of the class and then calls `#initialize` on that new instance. So, `#initialize` is technically an instance method. Inside an instance method we are in what is called **method scope** and `self` will refer to whichever instance the method is being called on. 
+
+We push `self` into the array that is stored in `@@all`. In this way, the `@@all` class variable will point to an ever-growing array that contains every instance of the `Song` class that gets created. 
+
+### Our Code in Action
+
+Let's see what happens when we actually execute the code we've written:
+
+```ruby
+99_problems = Song.new("99 Problems")
+thriller = Song.new("Thriller")
+```
+
+Now that we've created some songs, let's ask our `Song` class to show us all of the instances that we just created:
+
+```ruby
+Song.all
+  => NoMethodError: undefined method `all' for Song:Class
+```
+
+Uh-oh, looks like we don't have a class method to access the contents of the `@@all` array. Just like how we've built reader methods that expose the value of instance variables, we need to build a method that will expose, or make accessible outside of the class, the value of a class variable. 
+
+Let's build one now.
+
+### Building a Class Method to Access a Class Variable
+
+Let's call our class method `#all` and code it such that it iterates over all of the individual song instances stored in the `@@all` array, `puts`-ing out the name of each song. 
+
+```ruby
+class Song
+
+	@@all = []
+	
+	attr_accessor :name
+	
+	def initialize(name)
+		@name = name
+		@@all << self
+	end
+	
+	def self.all
+		@@all.each do |song|
+			puts song.name
+		end
+	end
+end
+```
+
+Recall that to define a class method we use the `def self.method_name` syntax. In this case, `self` refers to the class on which the class method will be called. This is because we are in the **class scope** right now, not inside the method scope, i.e. in between the `def`/`end` method definition keywords. 
+
+Now we can try again to call our class method on the `Song` class:
+
+```ruby
+Song.all
+```
+
+This should output:
+
+```bash
+99 Problems
+Thriller
+```
+
+We did it! We used a class variable to store a collection of instances of that class. We added new instances to this storage container every time a new instance was created with the help of the `self` keyword in our `#initialize` method. Lastly, we wrote a class method to access and print out the name of each song instance stored in our class variable. 
+
