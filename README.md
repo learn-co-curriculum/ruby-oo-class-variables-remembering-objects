@@ -9,11 +9,11 @@
 
 Let's say we're building a command line game in which players play various rounds until a final tally determines the winner. Or creating an app in which we want to store a list of all of the users who sign up. Or building a program that helps users track and store the passwords for their various accounts. 
 
-In all of these situations, an many more we can imagine, our application needs a way to store or remember a collection of class instances. Whether they are instances of a `Game`, `User` or `Password` class, all of these examples would require our program to keep track of instances that are created. 
+In all of these situations, an many more we can imagine, our application needs a way to store or remember a collection of instances of a class. Whether they are instances of a `Game`, `User` or `Password` class, all of these examples would require our program to keep track of instances that are created. 
 
 Luckily for us, Ruby allows us to do so by uses class variables to store new instances as soon as they are created. Let's take a look together. 
 
-## Using class variables to store class instances
+## Using class variables to store instances of a class
 
 Imagine we are building an app that managers a user's music. Our app should keep track of all of the songs and user enters and allow our user to browse their existing songs. 
 
@@ -52,7 +52,7 @@ It is not the responsibility of an individual song to know about all of the othe
 
 So, how can we tell the `Song` class to keep track of every instance that it creates? We use a class variable. 
 
-Let's create a class variable, `@@all`, that will store every instance of the `Song` class:
+Let's create a class variable, `@@all`, that will store every instance of the `Song` class. Recall that `@@` before a variable name is how we define a class variable.
 
 ```ruby
 class Song
@@ -115,7 +115,9 @@ Song.all
   => NoMethodError: undefined method `all' for Song:Class
 ```
 
-Uh-oh, looks like we don't have a class method to access the contents of the `@@all` array. Let's build one now:
+Uh-oh, looks like we don't have a class method to access the contents of the `@@all` array. Just like how we've built reader methods that expose the value of instance variables, we need to build a method that will expose, or make accessible outside of the class, the value of a class variable. 
+
+Let's build one now.
 
 ### Building a Class Method to Access a Class Variable
 
