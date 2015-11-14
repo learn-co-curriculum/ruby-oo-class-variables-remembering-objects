@@ -11,7 +11,7 @@ Let's say we're building a command line game in which players play various round
 
 In all of these situations, and many more we can imagine, our application needs a way to store or remember a collection of class instances. Whether they are instances of a `Game`, `User` or `Password` class, all of these examples would require our program to keep track of instances that are created. 
 
-Luckily for us, Ruby allows us to do so by uses class variables to store new instances as soon as they are created. Let's take a look together. 
+Luckily for us, Ruby allows us to do so by using class variables to store new instances as soon as they are created. Let's take a look together. 
 
 ## Using class variables to store instances of a class
 
