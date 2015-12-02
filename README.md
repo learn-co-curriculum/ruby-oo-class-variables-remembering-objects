@@ -160,3 +160,5 @@ Thriller
 
 We did it! We used a class variable to store a collection of instances of that class. We added new instances to this storage container every time a new instance was created with the help of the `self` keyword in our `#initialize` method. Lastly, we wrote a class method to access and print out the name of each song instance stored in our class variable. 
 
+
+<a href='https://learn.co/lessons/ruby-remembering-objects-readme' data-visibility='hidden'>View this lesson on Learn.co</a>
