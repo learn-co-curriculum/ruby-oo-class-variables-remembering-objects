@@ -104,7 +104,7 @@ We push `self` into the array that is stored in `@@all`. In this way, the `@@all
 Let's see what happens when we actually execute the code we've written:
 
 ```ruby
-99_problems = Song.new("99 Problems")
+ninety_nine_problems = Song.new("99 Problems")
 thriller = Song.new("Thriller")
 ```
 
