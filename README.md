@@ -2,8 +2,8 @@
 
 ## Objectives
 
-1. Understand the concept of remembrance in object-oriented programming. 
-2. Learn how to use class variables to remember, or store, instances of a class that are produced. 
+1. Explain the concept of remembrance in object-oriented programming. 
+2. Use class variables to remember, or store, instances of a class that are produced. 
 
 ## Introduction
 
@@ -21,7 +21,7 @@ Let's take a look at the following class:
 
 ```ruby
 class Song
-	
+
 	attr_accessor :name
 
 	def initialize(name)
