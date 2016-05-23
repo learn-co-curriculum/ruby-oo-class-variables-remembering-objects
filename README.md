@@ -25,7 +25,7 @@ class Song
   attr_accessor :name
 
   def initialize(name)
-	  @name = name
+    @name = name
   end
 end
 ```
@@ -57,13 +57,13 @@ Let's create a class variable, `@@all`, that will store every instance of the `S
 ```ruby
 class Song
 	
-	@@all = []
+  @@all = []
 	
-	attr_accessor :name
+  attr_accessor :name
 
-	def initialize(name)
-		@name = name
-	end
+  def initialize(name)
+    @name = name
+  end
 end
 ```
 
@@ -84,14 +84,14 @@ Let's take a look:
 ```ruby
 class Song
 	
-	@@all = []
+  @@all = []
 	
-	attr_accessor :name
+  attr_accessor :name
 
-	def initialize(name)
-		@name = name
-		@@all << self
-	end
+  def initialize(name)
+    @name = name
+    @@all << self
+  end
 end
 ```
 
@@ -126,20 +126,20 @@ Let's call our class method `#all` and code it such that it iterates over all of
 ```ruby
 class Song
 
-	@@all = []
+  @@all = []
 	
-	attr_accessor :name
+  attr_accessor :name
 	
-	def initialize(name)
-		@name = name
-		@@all << self
-	end
+  def initialize(name)
+    @name = name
+    @@all << self
+  end
 	
-	def self.all
-		@@all.each do |song|
-			puts song.name
-		end
-	end
+  def self.all
+    @@all.each do |song|
+      puts song.name
+    end
+  end
 end
 ```
 
