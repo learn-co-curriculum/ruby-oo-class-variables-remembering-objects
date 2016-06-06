@@ -33,7 +33,7 @@ end
 With this code, we can create a new song like this:
 
 ```ruby
-hotling_bling = Song.new("Hotline Bling")
+hotline_bling = Song.new("Hotline Bling")
 ```
 
 Let's go ahead and create another song:
@@ -162,3 +162,5 @@ We did it! We used a class variable to store a collection of instances of that c
 
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/ruby-remembering-objects-readme' title='Ruby Object Remembrance'>Ruby Object Remembrance</a> on Learn.co and start learning to code for free.</p>
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/ruby-remembering-objects-readme'>Remembering Objects</a> on Learn.co and start learning to code for free.</p>
