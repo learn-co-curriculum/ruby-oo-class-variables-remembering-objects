@@ -211,4 +211,4 @@ instance was created with the help of the `self` keyword in our `#initialize`
 method. Lastly, we wrote a class method to access and print out the name of
 each song instance stored in our class variable.
 
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/ruby-remembering-objects-readme' title='Ruby Object Remembrance'>Ruby Object Remembrance</a> on Learn.co and start learning to code for free.</p>
+
